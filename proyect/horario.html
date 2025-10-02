@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horarios de Entrenamientos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #01579b; 
+            --secondary-color: #0288d1; 
+            --accent-color: #7cfff4; 
+            --text-dark: #2c3e50;
+            --text-light: #ffffff; 
+            --section-bg-dark: #1a2a3a;
+            --footer-bg: #111a24;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+            color: var(--text-dark);
+        }
+
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 15px 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .navbar-logo {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .navbar-logo img {
+            height: 40px;
+        }
+
+        .back-button {
+            font-size: 1.5em;
+            color: var(--text-dark);
+            margin-right: 20px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .back-button:hover {
+            color: var(--secondary-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1, h2 {
+            font-family: 'Oswald', sans-serif;
+            text-align: center;
+            color: var(--primary-color);
+        }
+
+        .intro-section {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            margin-bottom: 40px;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .sport-section {
+            flex: 1 1 45%; 
+            min-width: 300px;
+            text-align: center;
+        }
+
+        .sport-section img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .button-group button {
+            background-color: var(--secondary-color);
+            color: var(--text-light);
+            padding: 15px 25px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 700;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-group button:hover {
+            background-color: #0069d9;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .schedule-section {
+            margin-top: 50px;
+        }
+
+        .schedule-section h2 {
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .schedule-section h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary-color);
+            margin: 15px auto 0;
+        }
+
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .schedule-table th, .schedule-table td {
+            padding: 15px;
+            text-align: left;
+            border: 1px solid #e0e0e0;
+        }
+
+        .schedule-table thead th {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+        
+        .schedule-table tbody tr:nth-child(even) {
+            background-color: #f8f8f8;
+        }
+
+        .schedule-table tbody tr:hover {
+            background-color: #eaf6ff;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 15px;
+            }
+            .navbar-logo {
+                margin-bottom: 15px;
+            }
+            .back-button {
+                margin-right: 0;
+            }
+            .intro-section {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .sport-section {
+                flex: 1 1 100%;
+                min-width: unset;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="can principal.html" class="back-button" aria-label="Volver a la página principal">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <a href="can principal.html" class="navbar-logo">
+            <img src="escudo3.jpg" alt="CAN Oruro Logo">
+            CAN Oruro
+        </a>
+    </nav>
+
+    <div class="container">
+        <h1>Horarios de Entrenamientos</h1>
+        <div class="intro-section">
+            <div class="sport-section">
+                <img src="fon3.jpg" alt="Imagen de Baloncesto">
+                <div class="button-group">
+                    <button onclick="location.href='#baloncesto-equipo'">Horario Equipo Baloncesto</button>
+                    <button onclick="location.href='#baloncesto-escuela'">Horario Escuela Baloncesto</button>
+                </div>
+            </div>
+            <div class="sport-section">
+                <img src="fon2.jpg" alt="Imagen de Voleibol">
+                <div class="button-group">
+                    <button onclick="location.href='#voleibol-equipo'">Horario Equipo Voleibol</button>
+                    <button onclick="location.href='#voleibol-escuela'">Horario Escuela Voleibol</button>
+                </div>
+            </div>
+        </div>
+        
+        <hr>
+
+        <div class="schedule-section">
+            <h2 id="baloncesto-equipo">Horario Equipo de Baloncesto</h2>
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th>Día</th>
+                        <th>Hora</th>
+                        <th>Categoría</th>
+                        <th>Lugar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Lunes</td>
+                        <td>18:00 - 20:00</td>
+                        <td>Senior Masculino</td>
+                        <td>Cancha Principal</td>
+                    </tr>
+                    <tr>
+                        <td>Martes</td>
+                        <td>17:00 - 19:00</td>
+                        <td>Juvenil Femenino</td>
+                        <td>Cancha Secundaria</td>
+                    </tr>
+                    <tr>
+                        <td>Jueves</td>
+                        <td>19:00 - 21:00</td>
+                        <td>Senior Femenino</td>
+                        <td>Cancha Principal</td>
+                    </tr>
+                    <tr>
+                        <td>Viernes</td>
+                        <td>16:00 - 18:00</td>
+                        <td>Cadete Masculino</td>
+                        <td>Cancha Secundaria</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 id="baloncesto-escuela">Horario Escuela de Baloncesto</h2>
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th>Día</th>
+                        <th>Hora</th>
+                        <th>Edad</th>
+                        <th>Lugar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Miércoles</td>
+                        <td>16:00 - 17:30</td>
+                        <td>6-9 años</td>
+                        <td>Cancha Principal</td>
+                    </tr>
+                    <tr>
+                        <td>Sábado</td>
+                        <td>10:00 - 11:30</td>
+                        <td>10-12 años</td>
+                        <td>Cancha Secundaria</td>
+                    </tr>
+                    <tr>
+                        <td>Sábado</td>
+                        <td>11:30 - 13:00</td>
+                        <td>13-15 años</td>
+                        <td>Cancha Principal</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 id="voleibol-equipo">Horario Equipo de Voleibol</h2>
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th>Día</th>
+                        <th>Hora</th>
+                        <th>Categoría</th>
+                        <th>Lugar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Lunes</td>
+                        <td>19:00 - 21:00</td>
+                        <td>Senior Femenino</td>
+                        <td>Gimnasio 1</td>
+                    </tr>
+                    <tr>
+                        <td>Miércoles</td>
+                        <td>18:00 - 20:00</td>
+                        <td>Juvenil Masculino</td>
+                        <td>Gimnasio 2</td>
+                    </tr>
+                    <tr>
+                        <td>Viernes</td>
+                        <td>17:00 - 19:00</td>
+                        <td>Senior Masculino</td>
+                        <td>Gimnasio 1</td>
+                    </tr>
+                    <tr>
+                        <td>Jueves</td>
+                        <td>16:00 - 18:00</td>
+                        <td>Cadete Femenino</td>
+                        <td>Gimnasio 2</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 id="voleibol-escuela">Horario Escuela de Voleibol</h2>
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th>Día</th>
+                        <th>Hora</th>
+                        <th>Edad</th>
+                        <th>Lugar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Martes</td>
+                        <td>16:00 - 17:30</td>
+                        <td>6-9 años</td>
+                        <td>Gimnasio 1</td>
+                    </tr>
+                    <tr>
+                        <td>Jueves</td>
+                        <td>10:00 - 11:30</td>
+                        <td>10-12 años</td>
+                        <td>Gimnasio 2</td>
+                    </tr>
+                    <tr>
+                        <td>Sábado</td>
+                        <td>09:00 - 10:30</td>
+                        <td>13-15 años</td>
+                        <td>Gimnasio 1</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

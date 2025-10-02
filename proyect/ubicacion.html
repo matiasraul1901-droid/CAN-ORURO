@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ubicación del Club</title>
+    <style>
+        /* Definición de variables de color del club */
+        :root {
+            --azul-marino: #001f3f;
+            --azul-vibrante: #007bff;
+            --blanco: #ffffff;
+            --sombra-fina: rgba(0, 0, 0, 0.2);
+        }
+
+        /* Se mantiene Poppins como fallback, pero se prioriza una sans-serif limpia */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;900&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body, html {
+            height: 100%;
+            /* FUENTE SAN-SERIF CLARA */
+            font-family: 'Poppins', Arial, sans-serif;
+        }
+
+        /* --- ESTILO DEL BOTÓN VOLVER DE LA TIENDA --- */
+        .boton-volver {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            z-index: 1000;
+            
+            /* Estilos de la tienda */
+            background-color: var(--azul-marino);
+            color: var(--blanco);
+            padding: 12px 25px; 
+            text-decoration: none;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Poppins', 'Arial Black', sans-serif; /* Mantenemos sans-serif */
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s;
+            box-shadow: 0 4px 10px var(--sombra-fina);
+        }
+        .boton-volver::before {
+            content: '←';
+            font-size: 1.2em;
+            line-height: 1;
+        }
+        .boton-volver:hover {
+            background-color: var(--azul-vibrante);
+            transform: translateY(-3px);
+        }
+        /* --- FIN ESTILO BOTÓN VOLVER --- */
+
+
+        .fondo-carrusel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+        .fondo-carrusel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            animation: carrusel 20s infinite;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+        }
+        .fondo-carrusel img:nth-child(1) { animation-delay: 0s; }
+        .fondo-carrusel img:nth-child(2) { animation-delay: 6s; }
+        .fondo-carrusel img:nth-child(3) { animation-delay: 12s; }
+        @keyframes carrusel {
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            30% { opacity: 1; }
+            40% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+        
+        /* --- FILTRO AZUL MARINO TRANSLÚCIDO --- */
+        .filtro-desvanecido {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Ajuste el gradiente para un mejor contraste */
+            background: linear-gradient(to bottom right, rgba(0, 31, 63, 0.9), rgba(0, 31, 63, 0.7)); 
+            z-index: -1;
+        }
+        /* --- FIN FILTRO --- */
+
+        .contenido {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 60px 30px;
+            padding-top: 100px; 
+            min-height: 100vh;
+            color: white;
+            text-align: center;
+        }
+        .titulo {
+            /* FUENTE SAN-SERIF */
+            font-family: 'Poppins', Arial, sans-serif;
+            font-size: 48px;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            /* COLOR CAMBIADO A BLANCO */
+            color: var(--blanco); 
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); 
+            font-weight: 900; 
+        }
+        .subtitulo {
+            font-size: 20px;
+            margin-bottom: 50px;
+            font-weight: 300;
+            /* COLOR CAMBIADO A BLANCO */
+            color: var(--blanco);
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+        }
+        .ubicacion-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+        }
+        /* Caja con borde azul marino sutil */
+        .box {
+            background-color: rgba(0, 31, 63, 0.9); /* Más opaco para mejor visibilidad */
+            border: 8px solid var(--azul-vibrante); /* Borde vibrante */
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+            width: 600px;
+            height: 450px;
+        }
+        iframe, .img-lugar {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            border: none;
+        }
+        @media (max-width: 1280px) {
+            .box {
+                width: 90vw;
+                height: 300px;
+            }
+            .titulo {
+                font-size: 36px;
+            }
+            .subtitulo {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="fondo-carrusel">
+        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxAQEhAPEg8QEA8PDw8PDQ8PDw8NDw8PFREWFhURFRUYHSggGBolGxUVIT0iJTUrMC4uFx8zODMtNygwLisBCgoKDg0OGhAQFysdHR0tLS0tLS0tLSsuLS0tLS0tLS8tLS0tLS0tLSstLS0tLS0tKy0vLSsrLS0tLS0tLS0tK//AABEIALABHgMBIgACEQEDEQH/xAAbAAACAgMBAAAAAAAAAAAAAAACAwEEAAUGB//EAEEQAAICAQMCBAMFAwoEBwAAAAECAAMRBBIhBTEGE0FRIjJhFEJxgZEzcqEHFSMkUmKxwdHwQ1OCkhY0g4ST4fH/xAAZAQEBAQEBAQAAAAAAAAAAAAABAAIDBAX/xAAlEQEBAAICAgICAgMBAAAAAAAAAQIRAyESMQRBUXEiMjNhgRT/2gAIAQEDEQH/AMx28Jj887o6lq7qU+p01XqfT4305v+9qf42v2j8yY9e6d0LpdWnoOqO+s19o0z230h40/Uf5P/AOHR8F9N0pXU3XNbbqU3P5v2+7+8y/V+F9S6Lg12t4X/ANlq03bT/lVn82k6t13w/b9m50fW6P/AFVb/wCifP8A2n/k3P8Anx2+r6W1z8dO6H1bQ/W0+2v/AGX/APL1/wD2L/yU/L1y+z22/wDP26zU+J+o63JqddqD+BvKq/2U9sTz+t6ZtT3fH4+93/nJp1zWpXo+l22sWrtf3U+2d/zC8J3+p0P/Nq/wCZ32f91Y7f+S2nQ6L/h/xnf7iTzXq+i3XG5M9N6F06ro1/lR7z/m3j3l+26Xg5h6fR/hO05/wBq/Efh7/x9Z4n6W+G38L8B+E3/H9pnvz/r+Fz/v8A1O53T6f3f8v2l4nvH4fn9/0nS+P+0fh9/wB5j4f/ABf6/vP+f8j+7rPH/AB/Vf+Zz3tE/e2b/wB2/wDn9Jp1/wAH6Lp/3H5/d0+L1zT9+f+h/Wd/2jXv2+v19f/n0lXf7R+v6f2/57f+nS/t//wA7f/n2n//Z" alt="Fondo 1">
+        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxMTEhUSExMWFhUVGBUVFxUXFxgVFRcVGBUXFxUVFRUYHSggGBolHRUVITEhJSktLi4uFx8zODMtNygtLisBCgoKDg0OGxAQGy0lHx8tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAKoBKAMBIgACEQEDEQH/xAAcAAACAgMBAQAAAAAAAAAAAAAEBQMGAQIHAAj/xABBEAABAgQDBQYEAwgBAgcAAAABAAIDBBEhBTFBElFhgfAGEyJxkaEyscHRQlLhFCMzYnKCkvFTBxUWFzRDg5PC/8QAGQEAAwEBAQAAAAAAAAAAAAAAAQIDBAAF/8QAKhEAAgICAgEDAwQDAQAAAAAAAAECEQMhEjFBBBNRIjJhQpGhsVJx0RT/2gAIAQEDEQH/AMx28Jj887o6lq7qU+p01XqfT4305v+9qf42v2j8yY9e6d0LpdWnoOqO+s19o0z230h40/Uf5P/AOHR8F9N0pXU3XNbbqU3P5v2+7+8y/V+F9S6Lg12t4X/ANlq03bT/lVn82k6t13w/b9m50fW6P/AFVb/wCifP8A2n/k3P8Anx2+r6W1z8dO6H1bQ/W0+2v/AGX/APL1/wD2L/yU/L1y+z22/wDP26zU+J+o63JqddqD+BvKq/2U9sTz+t6ZtT3fH4+93/nJp1zWpXo+l22sWrtf3U+2d/zC8J3+p0P/Nq/wCZ32f91Y7f+S2nQ6L/h/xnf7iTzXq+i3XG5M9N6F06ro1/lR7z/m3j3l+26Xg5h6fR/hO05/wBq/Efh7/x9Z4n6W+G38L8B+E3/H9pnvz/r+Fz/v8A1O53T6f3f8v2l4nvH4fn9/0nS+P+0fh9/wB5j4f/ABf6/vP+f8j+7rPH/AB/Vf+Zz3tE/e2b/wB2/wDn9Jp1/wAH6Lp/3H5/d0+L1zT9+f+h/Wd/2jXv2+v19f/n0lXf7R+v6f2/57f+nS/t//wA7f/n2n//Z" alt="Fondo 2">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7m6CEo2I-8ZMowuXAagSM7oCjP_TB3A5i2w&s" alt="Fondo 3">
+    </div>
+    
+    <a href="can principal.html" class="boton-volver">VOLVER</a>
+    
+    <div class="filtro-desvanecido"></div>
+    <div class="contenido">
+        
+        <h1 class="titulo">NUESTRA UBICACIÓN</h1>
+        <p class="subtitulo">Estamos en el **Parque de la Unión**, **Club Atlético Nacional CAN** - Oruro, Bolivia</p>
+        
+        <div class="ubicacion-grid">
+            <div class="box">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d474.4198958235184!2d-67.11065988048088!3d-17.962019363050388!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x93e2b0a460cff053%3A0x61b01a9655349177!2sClub%20Atletico%20nacional%20CAN!5e0!3m2!1ses-419!2sbo!4v1750789894053!5m2!1ses-419!2sbo" 
+                    allowfullscreen 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+            <div class="box">
+                <img src="https://c21262abb8.cbaul-cdnwnd.com/779f5cb6756e5459849222d11d160e0c/200000217-3f432403c7/frente_oficial.png" alt="Foto del lugar" class="img-lugar">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

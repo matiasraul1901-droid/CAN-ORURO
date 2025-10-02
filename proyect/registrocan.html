@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Registro del Club</title>
+    <style>
+        body {
+            /* Fondo que imita la base de la tienda */
+            background-color: #f4f4f9; /* Color de fondo claro y neutro */
+            font-family: Arial, sans-serif; /* Tipografía consistente con la tienda */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .registro-container {
+            background-color: #ffffff;
+            padding: 40px 35px;
+            border-radius: 14px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); /* Sombra más oscura */
+            width: 380px;
+            position: relative;
+            border-top: 5px solid #007bff; /* Borde superior con el color vibrante del club */
+        }
+        /* CAMBIOS DE ESTILO DEL CLUB A CONTINUACIÓN */
+        .btn-volver {
+            position: absolute;
+            top: 15px; /* Ligeramente más abajo */
+            left: 15px; /* Ligeramente más a la derecha */
+            width: 40px;
+            height: 40px;
+            background-color: #001f3f; /* Azul marino del club */
+            color: white;
+            border: none;
+            border-radius: 50%; /* Hecho circular */
+            font-size: 24px;
+            line-height: 1;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .btn-volver:hover {
+            background-color: #007bff; /* Azul celeste/vibrante del club en hover */
+        }
+        h2 {
+            text-align: center;
+            color: #007bff; /* Azul celeste/vibrante del club */
+            margin-bottom: 30px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            border-bottom: 2px solid #007bff; /* Línea separadora como en la tienda */
+            padding-bottom: 10px;
+        }
+        label {
+            display: block;
+            margin-top: 20px;
+            margin-bottom: 7px;
+            font-weight: 600;
+            color: #001f3f; /* Azul marino para etiquetas */
+            font-size: 15px;
+        }
+        input[type="text"],
+        input[type="number"],
+        select,
+        input[type="email"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 11px 12px;
+            font-size: 14px;
+            border: 1.5px solid #b0bec5;
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+        input:focus, select:focus {
+            border-color: #007bff; /* Azul celeste/vibrante del club en foco */
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2); /* Sombra de foco sutil */
+        }
+        button[type="submit"] {
+            margin-top: 30px;
+            width: 100%;
+            padding: 13px;
+            background-color: #001f3f; /* Azul marino del club */
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button[type="submit"]:hover {
+            background-color: #007bff; /* Azul celeste/vibrante del club en hover */
+        }
+        @media (max-width: 420px) {
+            .registro-container {
+                width: 90%;
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="registro-container">
+        <button class="btn-volver" title="Volver a la principal" onclick="location.href='can principal.html'">&#8592;</button>
+
+        <h2>Preinscripción del Club CAN</h2>
+        <form id="formRegistroBasquet">
+            <label for="nombre">Nombre completo</label>
+            <input type="text" id="nombre" name="nombre" required placeholder="Ej: Matías Raúl" />
+
+            <label for="edad">Edad</label>
+            <input type="number" id="edad" name="edad" min="5" max="80" required placeholder="Ej: 10" />
+
+            <label for="nivel">Nivel de experiencia</label>
+            <select id="nivel" name="nivel" required>
+                <option value="" disabled selected>Selecciona tu nivel</option>
+                <option value="principiante">Principiante</option>
+                <option value="intermedio">Intermedio</option>
+                <option value="avanzado">Avanzado</option>
+            </select>
+
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" name="email" required placeholder="lauragarcia@mail.com" />
+
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono" name="telefono" required placeholder="+591 12345678" />
+
+            <button type="submit">Pre Inscribirse</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("formRegistroBasquet").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const nombre = document.getElementById("nombre").value.trim();
+            const edad = document.getElementById("edad").value.trim();
+            const nivel = document.getElementById("nivel").value;
+            const email = document.getElementById("email").value.trim();
+            const telefono = document.getElementById("telefono").value.trim();
+
+            alert(`¡Inscripción exitosa!\n\n
+Nombre: ${nombre}
+Edad: ${edad}
+Nivel de experiencia: ${nivel.charAt(0).toUpperCase() + nivel.slice(1)}
+Correo: ${email}
+Teléfono: ${telefono}`);
+        });
+    </script>
+</body>
+</html>

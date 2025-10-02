@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏀 Resultados de Básquetbol - CAN</title>
+    <style>
+        :root {
+            --azul-marino: #001f3f;
+            --celeste-claro: #add8e6;
+            --celeste-medio: #87ceeb;
+            --celeste-oscuro: #5f9ea0;
+            --blanco: #ffffff;
+            --gris-claro: #f0f4f8;
+            --sombra-card: rgba(0, 0, 0, 0.1);
+            --sombra-fina: rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: var(--azul-marino);
+            overflow-x: hidden;
+            position: relative; /* Needed for absolute positioning of video */
+            background: var(--gris-claro); /* Fallback background */
+        }
+
+        /* Video Background Styling */
+        #video-background {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1; /* Send video to the back */
+            background-size: cover;
+            filter: brightness(0.4) grayscale(0.2); /* Darken and slightly desaturate video */
+        }
+
+        /* Content Overlay for better readability */
+        .content-overlay {
+            position: relative;
+            z-index: 1; /* Keep content above the video */
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--blanco);
+            background-color: var(--azul-marino);
+            padding: 25px 0; /* Increased padding */
+            margin: 0;
+            box-shadow: 0 4px 15px var(--sombra-card); /* Stronger shadow */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* More prominent text shadow */
+            font-size: 2.8em; /* Much larger title */
+            letter-spacing: 2px;
+            font-weight: 900;
+        }
+
+        .contenedor {
+            max-width: 950px; /* Slightly wider container */
+            margin: 40px auto; /* More margin */
+            padding: 0 20px;
+        }
+
+        .filtros {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem; /* Increased gap */
+            margin-bottom: 40px; /* More margin */
+        }
+
+        .select-container {
+            position: relative;
+            background: var(--blanco);
+            border-radius: 15px; /* More rounded corners */
+            box-shadow: 0 4px 10px var(--sombra-fina); /* Stronger shadow */
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            flex-grow: 1; /* Allow select boxes to grow */
+            max-width: 250px; /* Max width for select boxes */
+        }
+
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 100%;
+            padding: 15px 25px; /* Increased padding */
+            border: none;
+            background-color: transparent;
+            color: var(--azul-marino);
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1.1em; /* Larger font for select options */
+        }
+
+        .select-container::after {
+            content: '▼';
+            position: absolute;
+            right: 20px;
+            color: var(--azul-marino);
+            pointer-events: none;
+            font-size: 0.9em;
+        }
+
+        .btn-volver {
+            padding: 15px 25px; /* Increased padding */
+            border: none;
+            border-radius: 15px; /* More rounded corners */
+            background-color: var(--azul-marino);
+            color: var(--blanco);
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 10px var(--sombra-fina);
+            transition: background-color 0.3s, transform 0.2s;
+            font-size: 1.1em; /* Larger font for button */
+        }
+
+        .btn-volver:hover {
+            background-color: #003366;
+            transform: translateY(-3px); /* More pronounced hover effect */
+        }
+
+        .resultados {
+            display: grid;
+            gap: 30px; /* Increased gap */
+        }
+
+        .partido {
+            background: var(--blanco);
+            padding: 30px; /* Increased padding */
+            border-radius: 20px; /* More rounded corners */
+            box-shadow: 0 8px 25px var(--sombra-card); /* Stronger shadow */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            border-left: 8px solid var(--celeste-oscuro); /* Thicker border */
+            position: relative;
+            overflow: hidden;
+        }
+        .partido::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .partido:hover {
+            transform: translateY(-8px); /* More pronounced hover effect */
+            box-shadow: 0 15px 40px var(--sombra-card);
+        }
+
+        .fecha {
+            font-size: 1.1em; /* Larger font */
+            color: var(--celeste-oscuro);
+            font-weight: 700; /* Bolder */
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .competicion {
+            font-size: 1em; /* Larger font */
+            color: #778899;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .detalle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative; /* For z-index to work */
+            z-index: 1; /* Keep content above pseudo-element */
+        }
+
+        .equipo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px; /* Increased gap */
+            text-align: center;
+            flex: 1; /* Allow teams to take equal space */
+        }
+
+        .equipo .nombre {
+            font-size: 1.8em; /* Much larger team name */
+            font-weight: 800; /* Bolder */
+            color: var(--azul-marino);
+            text-shadow: 1px 1px 2px var(--sombra-fina);
+            line-height: 1.2;
+        }
+
+        .equipo img {
+            width: 80px; /* Much larger logo */
+            height: 80px; /* Much larger logo */
+            border-radius: 50%;
+            border: 5px solid var(--celeste-medio); /* Thicker border */
+            object-fit: cover;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow for logo */
+        }
+
+        .resultado {
+            font-size: 3.5rem; /* Even larger score */
+            font-weight: 900;
+            color: var(--azul-marino);
+            margin: 0 30px; /* More margin */
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Increased gap between numbers and separator */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .resultado span {
+            color: var(--azul-marino); /* Ensure score numbers are dark blue */
+        }
+
+        .separador {
+            font-size: 2.2rem; /* Larger separator */
+            color: var(--celeste-oscuro);
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop id="video-background" playsinline>
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-basketball-game-in-a-stadium-4168-large.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="content-overlay">
+        <h1>🏀 Resultados de Básquetbol</h1>
+        <div class="contenedor">
+            <div class="filtros">
+                <button class="btn-volver" title="Volver" onclick="location.href='file:///C:/Users/PC/OneDrive/Documentos/proyect/can%20principal.html'">
+                    &#8592; Volver
+                </button>
+                <div class="select-container">
+                    <select id="temporada">
+                        <option value="todas">Todas las temporadas</option>
+                        <option value="2024-25">2024-25</option>
+                        <option value="2023-24">2023-24</option>
+                    </select>
+                </div>
+                <div class="select-container">
+                    <select id="competicion">
+                        <option value="todas">Todas las competiciones</option>
+                        <option value="Liga Nacional">Liga Nacional</option>
+                        <option value="Torneo Regional">Torneo Regional</option>
+                    </select>
+                </div>
+            </div>
+            <div class="resultados" id="resultados">
+                <div class="partido" data-temporada="2024-25" data-competicion="Liga Nacional">
+                    <div class="fecha">1 JUN 2025</div>
+                    <div class="competicion">Liga Nacional</div>
+                    <div class="detalle">
+                        <div class="equipo">
+                            <img src="https://liboadictos.com/wp-content/uploads/can-de-oruro-nuevo-logo.png" alt="Escudo CAN">
+                            <span class="nombre">CAN</span>
+                        </div>
+                        <div class="resultado">
+                            <span>89</span>
+                            <span class="separador">-</span>
+                            <span>82</span>
+                        </div>
+                        <div class="equipo">
+                            <img src="https://via.placeholder.com/50/add8e6/001f3f?text=OPO" alt="Escudo Oponente">
+                            <span class="nombre">Oponente 1</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="partido" data-temporada="2024-25" data-competicion="Torneo Regional">
+                    <div class="fecha">1 MAY 2025</div>
+                    <div class="competicion">Torneo Regional</div>
+                    <div class="detalle">
+                        <div class="equipo">
+                            <img src="https://liboadictos.com/wp-content/uploads/can-de-oruro-nuevo-logo.png" alt="Escudo CAN">
+                            <span class="nombre">CAN</span>
+                        </div>
+                        <div class="resultado">
+                            <span>75</span>
+                            <span class="separador">-</span>
+                            <span>75</span>
+                        </div>
+                        <div class="equipo">
+                            <img src="https://via.placeholder.com/50/add8e6/001f3f?text=RIV" alt="Escudo Rival">
+                            <span class="nombre">Rival</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="partido" data-temporada="2023-24" data-competicion="Liga Nacional">
+                    <div class="fecha">1 MAR 2024</div>
+                    <div class="competicion">Liga Nacional</div>
+                    <div class="detalle">
+                        <div class="equipo">
+                            <img src="https://liboadictos.com/wp-content/uploads/can-de-oruro-nuevo-logo.png" alt="Escudo CAN">
+                            <span class="nombre">CAN</span>
+                        </div>
+                        <div class="resultado">
+                            <span>102</span>
+                            <span class="separador">-</span>
+                            <span>98</span>
+                        </div>
+                        <div class="equipo">
+                            <img src="https://via.placeholder.com/50/add8e6/001f3f?text=OPO" alt="Escudo Oponente">
+                            <span class="nombre">Oponente 2</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const temporadaSelect = document.getElementById('temporada');
+        const competicionSelect = document.getElementById('competicion');
+        const partidos = document.querySelectorAll('.partido');
+
+        function filtrarPartidos() {
+            const temporada = temporadaSelect.value;
+            const competicion = competicionSelect.value;
+            partidos.forEach(p => {
+                const temp = p.dataset.temporada;
+                const comp = p.dataset.competicion;
+                const mostrar =
+                    (temporada === 'todas' || temporada === temp) &&
+                    (competicion === 'todas' || competicion === comp);
+                p.style.display = mostrar ? 'block' : 'none';
+            });
+        }
+
+        temporadaSelect.addEventListener('change', filtrarPartidos);
+        competicionSelect.addEventListener('change', filtrarPartidos);
+    </script>
+</body>
+</html>

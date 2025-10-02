@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda del Club 👕</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background-color: #001f3f; 
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 5px solid #007bff; 
+            position: relative; 
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #001f3f; 
+            color: white;
+            padding: 20px 30px;
+            text-decoration: none;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+        .back-button:hover {
+            background-color: #007bff;
+        }
+        .back-button::before {
+            content: '←';
+            font-size: 1.2em;
+            line-height: 1;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px 0;
+        }
+        .product-section {
+            background-color: #ffffff;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .product-section h2 {
+            text-align: center;
+            color: #007bff; 
+            margin-top: 0;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            text-align: center;
+        }
+        .product-item {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            transition: transform 0.2s;
+            background-color: #fafafa;
+        }
+        .product-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        .product-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .product-item h3 {
+            font-size: 1.2em;
+            color: #001f3f; 
+        }
+        .price {
+            font-size: 1.5em;
+            color: #007bff; 
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .btn {
+            background-color: #001f3f;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #007bff;
+        }
+        footer {
+            background-color: #001f3f;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="can principal.html" class="back-button"> Volver</a>
+        
+        <h1>Tienda Oficial del Club</h1>
+        <p>¡Viste los colores de tu equipo con orgullo! ⚽</p>
+    </header>
+
+    <div class="container">
+        <div class="product-section">
+            <h2>Camisetas</h2>
+            <div class="product-grid">
+                <div class="product-item">
+                    <img src="https://via.placeholder.com/250x250/001f3f/ffffff?text=Camiseta+Titular" alt="Camiseta Titular">
+                    <h3>Camiseta Titular</h3>
+                    <p class="price">$50.00</p>
+                    <a href="#" class="btn">Comprar</a>
+                </div>
+                <div class="product-item">
+                    <img src="https://via.placeholder.com/250x250/007bff/ffffff?text=Camiseta+Visitante" alt="Camiseta Visitante">
+                    <h3>Camiseta Visitante</h3>
+                    <p class="price">$50.00</p>
+                    <a href="#" class="btn">Comprar</a>
+                </div>
+                <div class="product-item">
+                    <img src="https://via.placeholder.com/250x250/ffffff/001f3f?text=Camiseta+Entrenamiento" alt="Camiseta de Entrenamiento">
+                    <h3>Camiseta de Entrenamiento</h3>
+                    <p class="price">$45.00</p>
+                    <a href="#" class="btn">Comprar</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-section">
+            <h2>Chaquetas</h2>
+            <div class="product-grid">
+                <div class="product-item">
+                    <img src="https://via.placeholder.com/250x250/001f3f/ffffff?text=Chaqueta+Entrenamiento" alt="Chaqueta de Entrenamiento">
+                    <h3>Chaqueta de Entrenamiento</h3>
+                    <p class="price">$75.00</p>
+                    <a href="#" class="btn">Comprar</a>
+                </div>
+                <div class="product-item">
+                    <img src="https://via.placeholder.com/250x250/007bff/ffffff?text=Chaqueta+Rompevientos" alt="Chaqueta Rompevientos">
+                    <h3>Chaqueta Rompevientos</h3>
+                    <p class="price">$85.00</p>
+                    <a href="#" class="btn">Comprar</a>
+                </div>
+                <div class="product-item">
+                    <img src="https://via.placeholder.com/250x250/001f3f/ffffff?text=Chaqueta+Lluvia" alt="Chaqueta para la lluvia">
+                    <h3>Chaqueta para la Lluvia</h3>
+                    <p class="price">$90.00</p>
+                    <a href="#" class="btn">Comprar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Tienda del Club. Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+</html>
